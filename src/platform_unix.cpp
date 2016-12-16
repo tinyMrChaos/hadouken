@@ -34,6 +34,19 @@ fs::path platform::get_current_directory()
 
 int platform::launch_process(const std::string& executable, const std::vector<std::string>& args)
 {
+
+    std::string cmd = executable;
+
+    for (std::string arg : args)
+    {
+        cmd.append(" \"" + arg+"\"");
+    }
+
+    const char *cmd_char = cmd.c_str();
+    int ret = system(cmd_char);
+    int exit_code=WEXITSTATUS(ret);
+
+    return exit_code;
 }
 
 #endif
